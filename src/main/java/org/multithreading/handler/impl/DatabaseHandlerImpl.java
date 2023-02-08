@@ -60,7 +60,7 @@ public class DatabaseHandlerImpl implements DatabaseHandler {
         throw new DatabaseException(ExceptionMessage.ALL_RECORD_FETCHED);
       }
     } catch (Exception e) {
-      throw new DatabaseException(ExceptionMessage.DB_ERROR);
+      throw new DatabaseException(e.getMessage());
     }
   }
 }
