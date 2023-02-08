@@ -11,5 +11,9 @@ public enum ExceptionCode {
   /**
    * Db error exception code.
    */
-  DB_ERROR
+  DB_ERROR,
+  /**
+   * Consumer error exception code.
+   */
+  CONSUMER_ERROR
 }

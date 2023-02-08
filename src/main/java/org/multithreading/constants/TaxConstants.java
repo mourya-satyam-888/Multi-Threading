@@ -41,6 +41,9 @@ public final class TaxConstants {
    */
   public static final int SIZE_LIMIT = 2;
 
+  /**
+   * Instantiates a new Tax constants.
+   */
   private TaxConstants() {
 
   }

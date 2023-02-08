@@ -1,4 +1,4 @@
-package org.multithreading.handler.impl;
+package org.multithreading.repo.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,10 +7,12 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.multithreading.dbconfig.DatabaseConfig;
-import org.multithreading.encryptions.EncryptionUtils;
+import org.multithreading.config.DatabaseConfig;
+import org.multithreading.util.EncryptionUtils;
+import org.multithreading.handler.DatabaseHandler;
+import org.multithreading.repo.ItemRepoService;
 
-class DatabaseHandlerImplTest {
+class ItemRepoServiceImplTest {
   @Disabled
   @Test
   void generateDB() {
@@ -35,4 +37,17 @@ class DatabaseHandlerImplTest {
     }
   }
 
+  @Disabled
+  @Test
+  void dryRun() {
+    ItemRepoService itemRepoService = new ItemRepoServiceImpl(
+        new DatabaseHandler(new DatabaseConfig()));
+    try {
+      while (true) {
+        System.out.println(itemRepoService.getNextItem());
+      }
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }
 }

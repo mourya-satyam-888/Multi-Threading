@@ -16,4 +16,8 @@ public class ExceptionMessage {
    * The constant DB_ERROR.
    */
   public static final String DB_ERROR = "Unexpected Error";
+  /**
+   * The constant ALL_RECORD_CONSUMED.
+   */
+  public static final String ALL_RECORD_CONSUMED = "All record consumed";
 }

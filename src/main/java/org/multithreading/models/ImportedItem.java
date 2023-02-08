@@ -1,19 +1,12 @@
-package org.multithreading.baseclasses;
+package org.multithreading.models;
 
-import lombok.ToString;
 import org.multithreading.constants.TaxConstants;
 import org.multithreading.enums.ItemType;
 
 /**
  * Class for ImportedItem Type.
  */
-@ToString
 public class ImportedItem extends Item {
-  /**
-   * The Item tax.
-   */
-  private final double itemTax;
-
   /**
    * Instantiates a new Imported item.
    *
@@ -25,15 +18,10 @@ public class ImportedItem extends Item {
   public ImportedItem(final String itemName, final ItemType itemType,
                       final double itemPrice, final int itemQuantity) {
     super(itemName, itemType, itemPrice, itemQuantity);
-    itemTax = this.calculateTax();
   }
-
-  /**
-   * Used to calculate tax to imported items.
-   *
-   * @return return tax
-   */
-  protected double calculateTax() {
+  
+  @Override
+  public void calculateTax() {
     double tax;
     //10% import duty + tax 5rs if price under 100 after tax and import duty on cost or
     //+ 10rs if 100 to 200 else + 5%
@@ -46,6 +34,6 @@ public class ImportedItem extends Item {
     } else {
       tax += (TaxConstants.SURCHARGE_PERCENTAGE * (itemPrice + tax)) / 100.0;
     }
-    return tax;
+    itemTax = tax;
   }
 }

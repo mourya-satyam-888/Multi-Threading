@@ -1,4 +1,4 @@
-package org.multithreading.dbconfig;
+package org.multithreading.config;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -35,10 +35,10 @@ public class DatabaseConfig {
     try {
       final Object obj = new Yaml()
           .load(Files.newInputStream(Paths.get(PathConstants.APPLICATION_YML)));
-      final Map<String, String> data = (Map) obj;
-      url = data.get("url");
-      username = data.get("username");
-      password = data.get("password");
+      final Map<String, Map<String, String>> data = (Map) obj;
+      url = data.get("datasource").get("url");
+      username = data.get("datasource").get("username");
+      password = data.get("datasource").get("password");
     } catch (Exception e) {
       log.error("Application YML reading failed");
     }

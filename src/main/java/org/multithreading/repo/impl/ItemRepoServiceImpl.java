@@ -1,30 +1,24 @@
-package org.multithreading.handler.impl;
+package org.multithreading.repo.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import org.multithreading.baseclasses.Item;
 import org.multithreading.constants.DatabaseQuery;
 import org.multithreading.constants.ExceptionMessage;
-import org.multithreading.dbconfig.DatabaseConfig;
-import org.multithreading.encryptions.EncryptionUtils;
-import org.multithreading.enums.ItemType;
 import org.multithreading.exceptions.DatabaseException;
 import org.multithreading.handler.DatabaseHandler;
+import org.multithreading.models.Item;
+import org.multithreading.repo.ItemRepoService;
+import org.multithreading.util.EncryptionUtils;
 
 /**
  * The type Database handler.
  */
-public class DatabaseHandlerImpl implements DatabaseHandler {
+public class ItemRepoServiceImpl implements ItemRepoService {
   /**
-   * The Database config.
+   * The Database handler.
    */
-  private final DatabaseConfig databaseConfig;
-  /**
-   * The Con.
-   */
-  private Connection con;
+  private final DatabaseHandler databaseHandler;
+
   /**
    * The Result set.
    */
@@ -33,14 +27,13 @@ public class DatabaseHandlerImpl implements DatabaseHandler {
   /**
    * Instantiates a new Database handler.
    *
-   * @param dbConfig the db config
+   * @param dbHandler the db handler
    */
-  public DatabaseHandlerImpl(final DatabaseConfig dbConfig) {
-    this.databaseConfig = dbConfig;
+  public ItemRepoServiceImpl(final DatabaseHandler dbHandler) {
+    this.databaseHandler = dbHandler;
     try {
-      con = DriverManager.getConnection(databaseConfig.getUrl(),
-          databaseConfig.getUsername(), databaseConfig.getPassword());
-      final PreparedStatement ps = con.prepareStatement(DatabaseQuery.SELECT_ITEM);
+      final PreparedStatement ps = databaseHandler.getConnection()
+          .prepareStatement(DatabaseQuery.SELECT_ITEM);
       resultSet = ps.executeQuery();
     } catch (Exception e) {
       throw new DatabaseException(ExceptionMessage.CONNECTION_ERROR);
@@ -52,10 +45,10 @@ public class DatabaseHandlerImpl implements DatabaseHandler {
     try {
       if (resultSet.next()) {
         final String itemName = EncryptionUtils.decryptString(resultSet.getString("name"));
-        final ItemType itemType = ItemType.valueOf(resultSet.getString("type"));
+        final String itemType = resultSet.getString("type");
         final double itemPrice = resultSet.getDouble("price");
         final int itemQuantity = resultSet.getInt("quantity");
-        return new Item(itemName, itemType, itemPrice, itemQuantity);
+        return Item.createItem(itemName, itemType, itemPrice, itemQuantity);
       } else {
         throw new DatabaseException(ExceptionMessage.ALL_RECORD_FETCHED);
       }
