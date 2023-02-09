@@ -3,7 +3,7 @@ package org.multithreading.constants;
 /**
  * The type Database query.
  */
-public class DatabaseQuery {
+public class DatabaseQueryConstants {
   /**
    * The constant SELECT_ITEM.
    */

@@ -1,7 +1,7 @@
 package org.multithreading.services.impl;
 
 import lombok.extern.log4j.Log4j2;
-import org.multithreading.constants.ExceptionMessage;
+import org.multithreading.constants.ExceptionMessageConstants;
 import org.multithreading.constants.MemoryConstants;
 import org.multithreading.exceptions.ConsumerException;
 import org.multithreading.models.Item;
@@ -65,9 +65,9 @@ public class SharedMemoryServiceImpl implements SharedMemoryService {
       if (sharedMemory.getItemBuffer().size() > 0) {
         return sharedMemory.getItemBuffer().remove(0);
       }
-      throw new ConsumerException(ExceptionMessage.ALL_RECORD_CONSUMED);
+      throw new ConsumerException(ExceptionMessageConstants.ALL_RECORD_CONSUMED);
     } catch (Exception e) {
-      throw new ConsumerException(ExceptionMessage.ALL_RECORD_CONSUMED);
+      throw new ConsumerException(ExceptionMessageConstants.ALL_RECORD_CONSUMED);
     } finally {
       notifyAll();
     }

@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.multithreading.constants.ExceptionMessage;
+import org.multithreading.constants.ExceptionMessageConstants;
 import org.multithreading.exceptions.DatabaseException;
 import org.multithreading.models.Item;
 import org.multithreading.repo.ItemRepoService;
@@ -27,7 +27,7 @@ class ProducerThreadTest {
   @Test
   void producerTest() throws InterruptedException {
     Mockito.when(itemRepoService.getNextItem()).thenReturn(item)
-        .thenThrow(new DatabaseException(ExceptionMessage.ALL_RECORD_FETCHED));
+        .thenThrow(new DatabaseException(ExceptionMessageConstants.ALL_RECORD_FETCHED));
     Mockito.doNothing().when(sharedMemoryService).put(Mockito.any());
     Mockito.doNothing().when(sharedMemoryService).setCompleted();
     producerThread.start();

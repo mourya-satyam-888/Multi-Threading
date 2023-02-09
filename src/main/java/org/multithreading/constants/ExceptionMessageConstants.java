@@ -3,7 +3,7 @@ package org.multithreading.constants;
 /**
  * The type Exception message.
  */
-public class ExceptionMessage {
+public class ExceptionMessageConstants {
   /**
    * The constant CONNECTION_ERROR.
    */

@@ -71,11 +71,11 @@ public class Application {
       consumer.add(new ConsumerThread(sharedMemoryService, itemCollection));
       consumer.get(i).start();
     }
-    for (int i = 0; i < MemoryConstants.PRODUCER_THREAD_COUNT; i++) {
-      producer.get(i).join();
+    for (final Thread producerThread : producer) {
+      producerThread.join();
     }
-    for (int i = 0; i < MemoryConstants.CONSUMER_THREAD_COUNT; i++) {
-      consumer.get(i).join();
+    for (final Thread consumerThread : consumer) {
+      consumerThread.join();
     }
     log.info(itemCollection.getItemCollection().size());
     log.info(itemCollection.getItemCollection());

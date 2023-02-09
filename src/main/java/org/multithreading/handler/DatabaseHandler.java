@@ -2,13 +2,15 @@ package org.multithreading.handler;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import lombok.Getter;
 import org.multithreading.config.DatabaseConfig;
-import org.multithreading.constants.ExceptionMessage;
+import org.multithreading.constants.ExceptionMessageConstants;
 import org.multithreading.exceptions.DatabaseException;
 
 /**
  * The type Database handler.
  */
+@Getter
 public class DatabaseHandler {
   /**
    * The Database config.
@@ -17,7 +19,7 @@ public class DatabaseHandler {
   /**
    * The Con.
    */
-  private Connection con;
+  private Connection connection;
 
   /**
    * Instantiates a new Database handler.
@@ -27,19 +29,10 @@ public class DatabaseHandler {
   public DatabaseHandler(final DatabaseConfig dbConfig) {
     this.databaseConfig = dbConfig;
     try {
-      con = DriverManager.getConnection(databaseConfig.getUrl(),
+      connection = DriverManager.getConnection(databaseConfig.getUrl(),
           databaseConfig.getUsername(), databaseConfig.getPassword());
     } catch (Exception e) {
-      throw new DatabaseException(ExceptionMessage.CONNECTION_ERROR);
+      throw new DatabaseException(ExceptionMessageConstants.CONNECTION_ERROR);
     }
-  }
-
-  /**
-   * Gets connection.
-   *
-   * @return the connection
-   */
-  public Connection getConnection() {
-    return con;
   }
 }

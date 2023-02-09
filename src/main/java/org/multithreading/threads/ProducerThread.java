@@ -1,7 +1,7 @@
 package org.multithreading.threads;
 
 import lombok.extern.log4j.Log4j2;
-import org.multithreading.constants.ExceptionMessage;
+import org.multithreading.constants.ExceptionMessageConstants;
 import org.multithreading.exceptions.DatabaseException;
 import org.multithreading.models.Item;
 import org.multithreading.repo.ItemRepoService;
@@ -48,7 +48,7 @@ public class ProducerThread extends Thread {
         }
       }
     } catch (DatabaseException e) {
-      if (ExceptionMessage.ALL_RECORD_FETCHED.equals(e.getMessage())) {
+      if (ExceptionMessageConstants.ALL_RECORD_FETCHED.equals(e.getMessage())) {
         synchronized (sharedMemoryService) {
           sharedMemoryService.setCompleted();
           log.info("All Produced");

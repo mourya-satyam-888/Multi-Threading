@@ -2,8 +2,8 @@ package org.multithreading.repo.impl;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import org.multithreading.constants.DatabaseQuery;
-import org.multithreading.constants.ExceptionMessage;
+import org.multithreading.constants.DatabaseQueryConstants;
+import org.multithreading.constants.ExceptionMessageConstants;
 import org.multithreading.exceptions.DatabaseException;
 import org.multithreading.handler.DatabaseHandler;
 import org.multithreading.models.Item;
@@ -33,10 +33,10 @@ public class ItemRepoServiceImpl implements ItemRepoService {
     this.databaseHandler = dbHandler;
     try {
       final PreparedStatement ps = databaseHandler.getConnection()
-          .prepareStatement(DatabaseQuery.SELECT_ITEM);
+          .prepareStatement(DatabaseQueryConstants.SELECT_ITEM);
       resultSet = ps.executeQuery();
     } catch (Exception e) {
-      throw new DatabaseException(ExceptionMessage.CONNECTION_ERROR);
+      throw new DatabaseException(ExceptionMessageConstants.CONNECTION_ERROR);
     }
   }
 
@@ -50,7 +50,7 @@ public class ItemRepoServiceImpl implements ItemRepoService {
         final int itemQuantity = resultSet.getInt("quantity");
         return Item.createItem(itemName, itemType, itemPrice, itemQuantity);
       } else {
-        throw new DatabaseException(ExceptionMessage.ALL_RECORD_FETCHED);
+        throw new DatabaseException(ExceptionMessageConstants.ALL_RECORD_FETCHED);
       }
     } catch (Exception e) {
       throw new DatabaseException(e.getMessage());

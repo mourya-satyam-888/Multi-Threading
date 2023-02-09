@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.multithreading.constants.ExceptionMessage;
+import org.multithreading.constants.ExceptionMessageConstants;
 import org.multithreading.exceptions.ConsumerException;
 import org.multithreading.models.Item;
 import org.multithreading.models.ItemCollection;
@@ -27,7 +27,7 @@ class ConsumerThreadTest {
   @Test
   void consumerTest() throws InterruptedException {
     Mockito.when(sharedMemoryService.get()).thenReturn(item)
-        .thenThrow(new ConsumerException(ExceptionMessage.ALL_RECORD_CONSUMED));
+        .thenThrow(new ConsumerException(ExceptionMessageConstants.ALL_RECORD_CONSUMED));
     Mockito.doNothing().when(item).calculateTax();
     Mockito.doNothing().when(itemCollection).addItem(Mockito.any());
     consumerThread.start();
