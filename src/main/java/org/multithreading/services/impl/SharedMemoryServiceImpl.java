@@ -32,13 +32,13 @@ public class SharedMemoryServiceImpl implements SharedMemoryService {
   }
 
   @Override
-  public synchronized void setCompleted(final Boolean completed) {
+  public void setCompleted(final Boolean completed) {
     this.completed = completed;
     notifyAll();
   }
 
   @Override
-  public synchronized void put(final Item item) {
+  public void put(final Item item) {
     try {
       while (sharedMemory.getItemBuffer().size() == MemoryConstants.BUFFER_SIZE) {
         wait();
@@ -52,7 +52,7 @@ public class SharedMemoryServiceImpl implements SharedMemoryService {
   }
 
   @Override
-  public synchronized Item get() {
+  public Item get() {
     try {
       while (!completed && sharedMemory.getItemBuffer().size() == 0) {
         wait();

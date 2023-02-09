@@ -37,7 +37,10 @@ public class ConsumerThread extends Thread {
   public void run() {
     try {
       while (true) {
-        final Item item = sharedMemoryService.get();
+        Item item;
+        synchronized (sharedMemoryService) {
+          item = sharedMemoryService.get();
+        }
         item.calculateTax();
         itemCollection.addItem(item);
         log.info(item);

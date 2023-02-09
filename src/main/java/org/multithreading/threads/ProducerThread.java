@@ -39,13 +39,17 @@ public class ProducerThread extends Thread {
     try {
       while (true) {
         final Item item = itemRepoService.getNextItem();
-        sharedMemoryService.put(item);
-        log.info(item);
+        synchronized (sharedMemoryService) {
+          sharedMemoryService.put(item);
+          log.info(item);
+        }
       }
     } catch (DatabaseException e) {
       if (ExceptionMessage.ALL_RECORD_FETCHED.equals(e.getMessage())) {
-        sharedMemoryService.setCompleted(true);
-        log.info("All Produced");
+        synchronized (sharedMemoryService) {
+          sharedMemoryService.setCompleted(true);
+          log.info("All Produced");
+        }
         return;
       }
       log.error(e);
