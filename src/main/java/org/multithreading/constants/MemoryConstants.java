@@ -8,4 +8,8 @@ public class MemoryConstants {
    * The constant BUFFER_SIZE.
    */
   public static final int BUFFER_SIZE = 2;
+  /**
+   * The constant THREAD_COUNT.
+   */
+  public static final int THREAD_COUNT = 4;
 }

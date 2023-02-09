@@ -1,7 +1,10 @@
 package org.multithreading.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.log4j.Log4j2;
 import org.multithreading.config.DatabaseConfig;
+import org.multithreading.constants.MemoryConstants;
 import org.multithreading.handler.DatabaseHandler;
 import org.multithreading.models.ItemCollection;
 import org.multithreading.models.SharedMemory;
@@ -58,16 +61,24 @@ public class Application {
    * Run.
    */
   public void run() {
-    final Thread producer = new ProducerThread(sharedMemoryService, itemRepoService);
-    final Thread consumer = new ConsumerThread(sharedMemoryService, itemCollection);
-    producer.start();
-    consumer.start();
+    final List<Thread> consumer = new ArrayList<>();
+    final List<Thread> producer = new ArrayList<>();
+    for (int i = 0; i < MemoryConstants.THREAD_COUNT; i++) {
+      producer.add(new ProducerThread(sharedMemoryService, itemRepoService));
+      consumer.add(new ConsumerThread(sharedMemoryService, itemCollection));
+      producer.get(i).start();
+      consumer.get(i).start();
+    }
+
     try {
-      producer.join();
-      consumer.join();
+      for (int i = 0; i < MemoryConstants.THREAD_COUNT; i++) {
+        producer.get(i).join();
+        consumer.get(i).join();
+      }
     } catch (Exception e) {
       log.error(e);
     }
+    log.info(itemCollection.getItemCollection().size());
     log.info(itemCollection.getItemCollection());
   }
 }

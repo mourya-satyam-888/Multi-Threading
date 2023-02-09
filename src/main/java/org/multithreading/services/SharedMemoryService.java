@@ -22,8 +22,6 @@ public interface SharedMemoryService {
 
   /**
    * Sets completed.
-   *
-   * @param completed the completed
    */
-  void setCompleted(Boolean completed);
+  void setCompleted();
 }

@@ -21,12 +21,12 @@ class ItemRepoServiceImplTest {
       String query = "insert into item values(?,?,?,?)";
       Connection con = DriverManager.getConnection(databaseConfig.getUrl(),
           databaseConfig.getUsername(), databaseConfig.getPassword());
-      List<String> name = Arrays.asList("Mobile", "Computer", "Laptop", "Phone", "TV");
-      List<String> type = Arrays.asList("RAW", "IMPORTED", "MANUFACTURED", "IMPORTED", "RAW");
-      for (int i = 0; i < name.size(); i++) {
+      List<String> name = Arrays.asList("item");
+      List<String> type = Arrays.asList("RAW");
+      for (int i = 0; i < 92; i++) {
         PreparedStatement ps = con.prepareStatement(query);
-        ps.setString(1, EncryptionUtils.encryptString(name.get(i)));
-        ps.setString(2, type.get(i));
+        ps.setString(1, EncryptionUtils.encryptString(name.get(0) + (i + 8)));
+        ps.setString(2, type.get(0));
         ps.setDouble(3, 100);
         ps.setInt(4, 2);
         ps.execute();

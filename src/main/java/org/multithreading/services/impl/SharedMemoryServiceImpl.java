@@ -16,7 +16,11 @@ public class SharedMemoryServiceImpl implements SharedMemoryService {
   /**
    * The Completed.
    */
-  private Boolean completed = false;
+  private boolean completed;
+  /**
+   * The Thread count.
+   */
+  private int threadCount;
   /**
    * The Shared memory.
    */
@@ -32,8 +36,9 @@ public class SharedMemoryServiceImpl implements SharedMemoryService {
   }
 
   @Override
-  public void setCompleted(final Boolean completed) {
-    this.completed = completed;
+  public void setCompleted() {
+    threadCount++;
+    completed = threadCount == MemoryConstants.THREAD_COUNT;
     notifyAll();
   }
 
@@ -62,7 +67,6 @@ public class SharedMemoryServiceImpl implements SharedMemoryService {
       }
       throw new ConsumerException(ExceptionMessage.ALL_RECORD_CONSUMED);
     } catch (Exception e) {
-      log.error(e);
       throw new ConsumerException(ExceptionMessage.ALL_RECORD_CONSUMED);
     } finally {
       notifyAll();

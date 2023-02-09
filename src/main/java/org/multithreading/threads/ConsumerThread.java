@@ -42,7 +42,9 @@ public class ConsumerThread extends Thread {
           item = sharedMemoryService.get();
         }
         item.calculateTax();
-        itemCollection.addItem(item);
+        synchronized (itemCollection) {
+          itemCollection.addItem(item);
+        }
         log.info(item);
       }
     } catch (ConsumerException e) {

@@ -1,9 +1,19 @@
 plugins {
-    id 'java'
+    id "application"
+}
+group 'org.familytree'
+version '1.0-SNAPSHOT'
+apply plugin: "java"
+ext {
+    javaMainClass = "org.multithreading.Main"
 }
 
-group 'org.multithreading'
-version '1.0-SNAPSHOT'
+application {
+    mainClassName = javaMainClass
+}
+run {
+    standardInput = System.in
+}
 
 repositories {
     mavenCentral()
