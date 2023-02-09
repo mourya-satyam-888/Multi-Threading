@@ -1,0 +1,6 @@
+datasource:
+  username: "root"
+  password: "root@123"
+  url: "jdbc:mysql://localhost:3306/test"
+keystore:
+  password: "12345678"
