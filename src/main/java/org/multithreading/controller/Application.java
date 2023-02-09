@@ -63,16 +63,19 @@ public class Application {
   public void run() {
     final List<Thread> consumer = new ArrayList<>();
     final List<Thread> producer = new ArrayList<>();
-    for (int i = 0; i < MemoryConstants.THREAD_COUNT; i++) {
+    for (int i = 0; i < MemoryConstants.PRODUCER_THREAD_COUNT; i++) {
       producer.add(new ProducerThread(sharedMemoryService, itemRepoService));
-      consumer.add(new ConsumerThread(sharedMemoryService, itemCollection));
       producer.get(i).start();
+    }
+    for (int i = 0; i < MemoryConstants.CONSUMER_THREAD_COUNT; i++) {
+      consumer.add(new ConsumerThread(sharedMemoryService, itemCollection));
       consumer.get(i).start();
     }
-
     try {
-      for (int i = 0; i < MemoryConstants.THREAD_COUNT; i++) {
+      for (int i = 0; i < MemoryConstants.PRODUCER_THREAD_COUNT; i++) {
         producer.get(i).join();
+      }
+      for (int i = 0; i < MemoryConstants.CONSUMER_THREAD_COUNT; i++) {
         consumer.get(i).join();
       }
     } catch (Exception e) {

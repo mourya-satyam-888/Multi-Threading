@@ -9,7 +9,11 @@ public class MemoryConstants {
    */
   public static final int BUFFER_SIZE = 2;
   /**
-   * The constant THREAD_COUNT.
+   * The constant PRODUCER_THREAD_COUNT.
    */
-  public static final int THREAD_COUNT = 4;
+  public static final int PRODUCER_THREAD_COUNT = 4;
+  /**
+   * The constant CONSUMER_THREAD_COUNT.
+   */
+  public static final int CONSUMER_THREAD_COUNT = 3;
 }

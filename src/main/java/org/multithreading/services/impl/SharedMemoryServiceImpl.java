@@ -38,7 +38,7 @@ public class SharedMemoryServiceImpl implements SharedMemoryService {
   @Override
   public void setCompleted() {
     threadCount++;
-    completed = threadCount == MemoryConstants.THREAD_COUNT;
+    completed = threadCount == MemoryConstants.PRODUCER_THREAD_COUNT;
     notifyAll();
   }
 
