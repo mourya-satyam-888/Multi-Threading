@@ -60,7 +60,7 @@ public class Application {
   /**
    * Run.
    */
-  public void run() {
+  public void run() throws InterruptedException {
     final List<Thread> consumer = new ArrayList<>();
     final List<Thread> producer = new ArrayList<>();
     for (int i = 0; i < MemoryConstants.PRODUCER_THREAD_COUNT; i++) {
@@ -71,15 +71,11 @@ public class Application {
       consumer.add(new ConsumerThread(sharedMemoryService, itemCollection));
       consumer.get(i).start();
     }
-    try {
-      for (int i = 0; i < MemoryConstants.PRODUCER_THREAD_COUNT; i++) {
-        producer.get(i).join();
-      }
-      for (int i = 0; i < MemoryConstants.CONSUMER_THREAD_COUNT; i++) {
-        consumer.get(i).join();
-      }
-    } catch (Exception e) {
-      log.error(e);
+    for (int i = 0; i < MemoryConstants.PRODUCER_THREAD_COUNT; i++) {
+      producer.get(i).join();
+    }
+    for (int i = 0; i < MemoryConstants.CONSUMER_THREAD_COUNT; i++) {
+      consumer.get(i).join();
     }
     log.info(itemCollection.getItemCollection().size());
     log.info(itemCollection.getItemCollection());

@@ -11,7 +11,7 @@ public class Main {
    *
    * @param args the input arguments
    */
-  public static void main(final String[] args) {
+  public static void main(final String[] args) throws InterruptedException {
     final Application application = new Application();
     application.run();
   }
